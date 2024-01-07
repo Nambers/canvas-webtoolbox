@@ -1,33 +1,26 @@
 {
   "manifest_version": 3,
-  "name": "Osu Webtoolbox",
-  "version": "0.1.0",
-  "description": "My Chrome Extension",
-  "icons": {
-    "16": "icons/icon_16.png",
-    "32": "icons/icon_32.png",
-    "48": "icons/icon_48.png",
-    "128": "icons/icon_128.png"
-  },
-  "background": {
-    "service_worker": "background.js"
-  },
+  "name": "Canvas Web ToolBox",
+  "description": "A collection of tools goal to make life easier on Canvas",
+  "version": "0.1",
   "action": {
-    "default_title": "Osu Webtoolbox",
+    "default_icon": "hello_extensions.png",
     "default_popup": "popup.html"
   },
-  "permissions": [
-    "storage"
-  ],
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "run_at": "document_idle",
-      "js": [
-        "contentScript.js"
-      ]
+      "js": ["cumulative_gpa.js"],
+      "matches": ["https://*.instructure.com/courses"]
+    },
+    {
+      "js": ["modules_downloader.js"],
+      "matches": ["https://*.instructure.com/courses/*/modules"]
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": ["storage", "activeTab", "debugger", "tabs"],
+  "host_permissions": ["https://*.canvas-user-content.com/*"]
 }

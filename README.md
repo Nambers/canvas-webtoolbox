@@ -1,19 +1,32 @@
-# <img src="public/icons/icon_48.png" width="45" align="left"> Osu Webtoolbox
+# Canvas Webtoolbox
 
-My Chrome Extension
+A chrome extension for canvas.
+
+Hopefully it can make life easier.
 
 ## Features
 
-- Feature 1
-- Feature 2
+- Download helper
+    + Allow you to download all files from modules page of a course in one click.
+- GPA calculator
+    + Calculating cumulative/semester GPA based on the grades on canvas.
 
 ## Install
 
-[**Chrome** extension]() <!-- TODO: Add chrome extension link inside parenthesis -->
+Relase page
 
 ## Contribution
 
-Suggestions and pull requests are welcomed!.
+Suggestions and pull requests are welcomed!
+
+Specially for the GPA calculator, need to add scripts to find the credits of each course for each university (check `./src/modules/schools`).
+
+## Build
+```bash
+npm run build
+npm run watch
+npm run pack
+```
 
 ---
 

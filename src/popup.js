@@ -1,112 +1,65 @@
 'use strict';
 
-import './popup.css';
+const checkbox_gpa_calculator = document.querySelector('input#gpa_calculator');
+const checkbox_download_helper = document.querySelector('input#download_helper');
+const select_school_name = document.querySelector('select#school_name');
 
-(function () {
-  // We will make use of Storage API to get and store `count` value
-  // More information on Storage API can we found at
-  // https://developer.chrome.com/extensions/storage
-
-  // To get storage access, we have to mention it in `permissions` property of manifest.json file
-  // More information on Permissions can we found at
-  // https://developer.chrome.com/extensions/declare_permissions
-  const counterStorage = {
-    get: (cb) => {
-      chrome.storage.sync.get(['count'], (result) => {
-        cb(result.count);
-      });
-    },
-    set: (value, cb) => {
-      chrome.storage.sync.set(
-        {
-          count: value,
-        },
-        () => {
-          cb();
-        }
-      );
-    },
-  };
-
-  function setupCounter(initialValue = 0) {
-    document.getElementById('counter').innerHTML = initialValue;
-
-    document.getElementById('incrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'INCREMENT',
-      });
+const enableModules = {
+  get: (cb) => {
+    chrome.storage.local.get(['enableModules'], (result) => {
+      cb(result['enableModules']);
     });
-
-    document.getElementById('decrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'DECREMENT',
-      });
-    });
-  }
-
-  function updateCounter({ type }) {
-    counterStorage.get((count) => {
-      let newCount;
-
-      if (type === 'INCREMENT') {
-        newCount = count + 1;
-      } else if (type === 'DECREMENT') {
-        newCount = count - 1;
-      } else {
-        newCount = count;
-      }
-
-      counterStorage.set(newCount, () => {
-        document.getElementById('counter').innerHTML = newCount;
-
-        // Communicate with content script of
-        // active tab by sending a message
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          const tab = tabs[0];
-
-          chrome.tabs.sendMessage(
-            tab.id,
-            {
-              type: 'COUNT',
-              payload: {
-                count: newCount,
-              },
-            },
-            (response) => {
-              console.log('Current count value passed to contentScript file');
-            }
-          );
-        });
-      });
-    });
-  }
-
-  function restoreCounter() {
-    // Restore count value
-    counterStorage.get((count) => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
-        });
-      } else {
-        setupCounter(count);
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', restoreCounter);
-
-  // Communicate with background file by sending a message
-  chrome.runtime.sendMessage(
-    {
-      type: 'GREETINGS',
-      payload: {
-        message: 'Hello, my name is Pop. I am from Popup.',
+  },
+  set: (value, cb = undefined) => {
+    chrome.storage.local.set(
+      {
+        ['enableModules']: value,
       },
-    },
-    (response) => {
-      console.log(response.message);
-    }
-  );
-})();
+      () => {
+        if (cb) cb();
+      }
+    );
+  },
+  remove: () => chrome.storage.local.remove(['enableModules']),
+};
+enableModules.get((result) => {
+  if (
+    result == null ||
+    result.gpa_calculator == null ||
+    result.download_helper == null
+  ) {
+    enableModules.set({
+      gpa_calculator: false,
+      gpa_query_name: 'osu',
+      download_helper: false,
+    });
+    checkbox_gpa_calculator.checked = false;
+    checkbox_download_helper.checked = false;
+    select_school_name.value = 'osu';
+  }else{
+    checkbox_gpa_calculator.checked = result.gpa_calculator;
+    checkbox_download_helper.checked = result.download_helper;
+    select_school_name.value = result.school_name;
+  }
+});
+checkbox_download_helper.addEventListener('change', (event) => {
+  enableModules.set({
+    gpa_calculator: checkbox_gpa_calculator.checked,
+    download_helper: checkbox_download_helper.checked,
+    school_name: select_school_name.value,
+  });
+});
+checkbox_gpa_calculator.addEventListener('change', (event) => {
+  enableModules.set({
+    gpa_calculator: checkbox_gpa_calculator.checked,
+    download_helper: checkbox_download_helper.checked,
+    school_name: select_school_name.value,
+  });
+});
+select_school_name.addEventListener('change', (event) => {
+  enableModules.set({
+    gpa_calculator: checkbox_gpa_calculator.checked,
+    download_helper: checkbox_download_helper.checked,
+    school_name: select_school_name.value,
+  });
+});
