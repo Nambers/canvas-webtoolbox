@@ -30,7 +30,7 @@ Relase page
 
 Suggestions and pull requests are welcomed!
 
-Specially for the GPA calculator, need to add scripts to find the credits of each course for each university (check `./src/modules/schools`).
+Especially for the GPA calculator part, we need to write distinct scripts to find the responding credits for every university (check `./src/modules/schools`).
 
 ## Build
 ```bash
