@@ -8,8 +8,19 @@ Hopefully it can make life easier.
 
 - Download helper
     + Allow you to download all files from modules page of a course in one click.
+        <details>
+
+        ![Download helper showing](./assets/Func1.gif)
+
+        </details>
+
 - GPA calculator
     + Calculating cumulative/semester GPA based on the grades on canvas.
+        <details>
+
+        ![GPA calculator showing](./assets/Func2.gif)
+
+        </details>
 
 ## Install
 
