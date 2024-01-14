@@ -24,7 +24,7 @@ Hopefully it can make life easier.
 
 ## Install
 
-Relase page
+Release page
 
 ## Contribution
 
