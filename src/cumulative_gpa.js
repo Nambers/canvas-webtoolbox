@@ -12,7 +12,21 @@ const enableModules = {
 
 function count_gpa() {
   var rows = courses_table.getElementsByTagName('tr');
-  var target_term = rows[1].getElementsByTagName('td')[3].textContent.trim();
+  var today = new Date();
+  var current_month = today.getMonth() + 1;
+  var target_term = "";
+  if(current_month >= 8){
+    target_term = "Autumn";
+  }else if(current_month >= 5){
+    target_term = "Summer";
+  }else if(current_month >= 1){
+    target_term = "Spring";
+  }else{
+    error("Invalid month" + current_month);
+    // fallback
+    target_term = rows[1].getElementsByTagName('td')[3].textContent.trim(); 
+  }
+  target_term += " " + String(today.getFullYear());
   console.log(target_term);
   var promises = [];
   var gpa_table = {
