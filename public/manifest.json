@@ -15,12 +15,16 @@
     {
       "js": ["modules_downloader.js"],
       "matches": ["https://*.instructure.com/courses/*/modules"]
+    },
+    {
+      "js": ["files_downloader.js"],
+      "matches": ["https://*.instructure.com/courses/*/files"]
     }
   ],
   "background": {
     "service_worker": "background.js",
     "type": "module"
   },
-  "permissions": ["storage", "activeTab", "debugger", "tabs"],
-  "host_permissions": ["https://*.canvas-user-content.com/*"]
+  "permissions": ["storage", "activeTab", "debugger", "tabs", "cookies"],
+  "host_permissions": ["https://*.canvas-user-content.com/*", "https://*.instructure.com/*"]
 }

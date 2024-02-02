@@ -35,6 +35,23 @@ function getCreditWrapper(info, callback, fallback) {
   });
 }
 
+function fetch_with_cookie(url, method, req_headers={}){
+  return new Promise((resolve, reject) => {
+    chrome.cookies.getAll({domain: url.split('/')[2]}, (cookies) => {
+      var cookie = cookies.map((c) => `${c.name}=${c.value}`).join(';');
+      req_headers['Cookie'] = cookie;
+      fetch(url, {
+        method: method,
+        headers: req_headers
+      }).then((resp) => {
+        resolve(resp);
+      }).catch((e) => {
+        reject(e);
+      });
+    });
+  });
+}
+
 async function getGrade(info, callback, fallback) {
   chrome.tabs.create(
     {
@@ -236,6 +253,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             error: `Course ${request.class_name} not found. Please check manually.`,
           })
       );
+      break;
+    case 'GET_W_COOKIES_HTML':
+      fetch_with_cookie(request.url, "GET")
+        .then((resp) => resp.text())
+        .then((t) => sendResponse(t))
+        .catch((error) => {
+          console.error("Error fetching or converting blob:", error, "\nreq", request);
+          sendResponse({ error: "Failed to fetch or convert blob" });
+        });
+      break;
+    case 'GET_W_COOKIES_JSON':
+      fetch_with_cookie(request.url, "GET")
+        .then((resp) => resp.json())
+        .then((t) => sendResponse(t))
+        .catch((error) => {
+          console.error("Error fetching or converting blob:", error, "\nreq", request);
+          sendResponse({ error: "Failed to fetch or convert blob" });
+        });
       break;
     default:
       sendResponse({ error: 'unknown request' });

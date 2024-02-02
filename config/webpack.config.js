@@ -13,6 +13,7 @@ const config = (env, argv) =>
       background: PATHS.src + '/background.js',
       cumulative_gpa: PATHS.src + '/cumulative_gpa.js',
       modules_downloader: PATHS.src + '/modules_downloader.js',
+      files_downloader: PATHS.src + '/files_downloader.js',
       popup: PATHS.src + '/popup.js',
     },
     // module: {
