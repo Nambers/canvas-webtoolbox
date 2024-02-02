@@ -1,7 +1,7 @@
 {
   "name": "canvas-webtoolbox",
   "version": "0.1.0",
-  "description": "My Chrome Extension",
+  "description": "A chrome extension for canvas",
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",
