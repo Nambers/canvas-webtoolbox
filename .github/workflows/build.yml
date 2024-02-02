@@ -6,6 +6,11 @@ name: build
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'src/**'
+      - 'config/**'
+      - 'package.json'
+      - 'package-lock.json'
   pull_request:
     branches: [ "main" ]
 
@@ -16,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: latest
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
