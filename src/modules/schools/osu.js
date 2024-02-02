@@ -16,6 +16,7 @@ function getCredit(info, callback, fallback) {
     info.century.toString() +
     info.year.toString() +
     (info.semester == 'Autumn' ? '8' : info.semester == 'Spring' ? '2' : '4');
+    // TODO: API disabled
   var searh_url = `https://contenttest.osu.edu/v2/classes/search?q=${info.class_name}&client=json&campus=${info.campus}&p=1&term=${term_code}`;
   fetch(searh_url)
     .then((resp) => resp.json())
@@ -35,8 +36,29 @@ function getCredit(info, callback, fallback) {
             return;
           } else {
             console.warn(
-              `Course ${info.class_name} does not have section ${info.section}. Please check manually.`
+              `Course ${info.class_name} does not have section ${info.section}. Please check manually. Can be a lab section or sth.`
             );
+            // TODO: take care of lab section, but we cannot get prompt from background service
+            // var percentage = -2;
+            // while (true) {
+            //   var ans = prompt(
+            //     `${info.class_name}(${info.section}) can be a lab section. If so, input the percentage of it grade to the main course. Otherwise, press cancel to stop whole calculation.`,
+            //     '0.2'
+            //   );
+            //   if (ans == null) {
+            //     // cancelled
+            //     break;
+            //   }
+            //   ans = parseFloat(ans);
+            //   if (!isNaN(ans) && ans >= 0 && ans <= 1) {
+            //     percentage = ans;
+            //     break;
+            //   } else {
+            //     alert('Invalid input!');
+            //   }
+            // }
+            fallback({ lab: 0.2 });
+            return;
           }
         }
       }

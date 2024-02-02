@@ -1,7 +1,9 @@
 'use strict';
 
 const checkbox_gpa_calculator = document.querySelector('input#gpa_calculator');
-const checkbox_download_helper = document.querySelector('input#download_helper');
+const checkbox_download_helper = document.querySelector(
+  'input#download_helper'
+);
 const select_school_name = document.querySelector('select#school_name');
 
 const enableModules = {
@@ -36,7 +38,7 @@ enableModules.get((result) => {
     checkbox_gpa_calculator.checked = false;
     checkbox_download_helper.checked = false;
     select_school_name.value = 'osu';
-  }else{
+  } else {
     checkbox_gpa_calculator.checked = result.gpa_calculator;
     checkbox_download_helper.checked = result.download_helper;
     select_school_name.value = result.school_name;

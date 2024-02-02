@@ -15,25 +15,27 @@ const enableModules = {
 
 const course_id = window.location.href.split('/').slice(-2)[0];
 
-function init(){
-    chrome.runtime.sendMessage(
-        chrome.runtime.id,
-        {
-            type: "GET_W_COOKIES_JSON",
-            url: "https://osu.instructure.com/api/v1/courses/" + course_id + "/folders/root"
-        },
-        (response) => {
-            // TODO
-            console.log(response);
-        }
-    )
+function init() {
+  chrome.runtime.sendMessage(
+    chrome.runtime.id,
+    {
+      type: 'GET_W_COOKIES_JSON',
+      url:
+        'https://osu.instructure.com/api/v1/courses/' +
+        course_id +
+        '/folders/root',
+    },
+    (response) => {
+      // TODO
+      console.log(response);
+    }
+  );
 }
 
-
 enableModules.get((result) => {
-    if (result && result.download_helper) {
-      init();
-    } else {
-      console.log('Download helper disabled');
-    }
-  });
+  if (result && result.download_helper) {
+    init();
+  } else {
+    console.log('Download helper disabled');
+  }
+});
