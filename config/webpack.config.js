@@ -11,21 +11,10 @@ const config = (env, argv) =>
   merge(common, {
     entry: {
       background: PATHS.src + '/background.js',
-      cumulative_gpa: PATHS.src + '/cumulative_gpa.js',
       modules_downloader: PATHS.src + '/modules_downloader.js',
       files_downloader: PATHS.src + '/files_downloader.js',
       popup: PATHS.src + '/popup.js',
     },
-    // module: {
-    //   rules: [
-    //     {
-    //       test: /\.js$/i,
-    //       exclude: /node_modules/,
-    //       include: PATHS.src + "/modules",
-    //       use: ['babel-loader'],
-    //     },
-    //   ],
-    // },
     plugins: [
       new CircularDependencyPlugin({
         // exclude detection of files based on a RegExp

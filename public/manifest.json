@@ -9,10 +9,6 @@
   },
   "content_scripts": [
     {
-      "js": ["cumulative_gpa.js"],
-      "matches": ["https://*.instructure.com/courses"]
-    },
-    {
       "js": ["modules_downloader.js"],
       "matches": ["https://*.instructure.com/courses/*/modules"]
     },
@@ -25,7 +21,7 @@
     "service_worker": "background.js",
     "type": "module"
   },
-  "permissions": ["storage", "debugger", "tabs", "cookies"],
+  "permissions": ["storage", "cookies"],
   "host_permissions": [
     "https://*.canvas-user-content.com/*",
     "https://*.instructure.com/*"
